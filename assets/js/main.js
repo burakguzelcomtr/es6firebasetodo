@@ -57,10 +57,15 @@ class listUI {
     const listRow = document.createElement('ul');
     console.log(item);
     listRow.innerHTML =  `
-      <li> ${item.todoVal}</li>
+      <li> ${item.todoVal} <span class="delete">X</span></li>
     `;
 
     listContainer.appendChild(listRow);
+  }
+  static deleteItem(item) {
+    if(item.classList.contains("delete")) {
+      item.parentElement.remove();
+    }
   }
 }
 
@@ -70,11 +75,16 @@ document.addEventListener('DOMContentLoaded' , listUI.displayTodos)
 document.getElementById("newToDoForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const todoName = document.querySelector("#todoVal").value; 
-  const newToDoItem = new toDoItem(todoName, now);
-  console.log(newToDoItem)
-  listUI.addItemsToList(newToDoItem);
-  
-  document.querySelector("#todoVal").value=" "; 
+  if(todoName) {
+    const newToDoItem = new toDoItem(todoName, now);
+    console.log(newToDoItem)
+    listUI.addItemsToList(newToDoItem);
+    
+    document.querySelector("#todoVal").value=" "; 
+  } 
 })
 
-//Display Todos
+// Delete a Todo
+document.querySelector("#toDoList").addEventListener("click", (e) => {
+  listUI.deleteItem(e.target);
+})

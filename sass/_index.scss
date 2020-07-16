@@ -125,6 +125,28 @@ main {
           z-index: 4;
         }
       }
+      #toDoList {
+        background: #fff;
+        ul {
+          list-style: none;
+          padding:0;
+          margin: 0;
+          li {
+            border-top:1px solid #ccc;
+            padding:15px 0px;
+            color: var(--black);
+            position: relative;
+            span {
+              position: absolute;
+              right: 0;
+              background: var(--purple);
+              color: var(--white);
+              padding:0px 5px;
+              cursor: pointer;
+            }
+          }
+        }
+      }
     }
   }
 }

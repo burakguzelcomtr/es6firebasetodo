@@ -76,8 +76,15 @@ var listUI = /*#__PURE__*/function () {
       var listContainer = document.querySelector("#toDoList");
       var listRow = document.createElement('ul');
       console.log(item);
-      listRow.innerHTML = "\n      <li> ".concat(item.todoVal, "</li>\n    ");
+      listRow.innerHTML = "\n      <li> ".concat(item.todoVal, " <span class=\"delete\">X</span></li>\n    ");
       listContainer.appendChild(listRow);
+    }
+  }, {
+    key: "deleteItem",
+    value: function deleteItem(item) {
+      if (item.classList.contains("delete")) {
+        item.parentElement.remove();
+      }
     }
   }]);
 
@@ -90,8 +97,15 @@ document.addEventListener('DOMContentLoaded', listUI.displayTodos); // Add Todo
 document.getElementById("newToDoForm").addEventListener("submit", function (e) {
   e.preventDefault();
   var todoName = document.querySelector("#todoVal").value;
-  var newToDoItem = new toDoItem(todoName, now);
-  console.log(newToDoItem);
-  listUI.addItemsToList(newToDoItem);
-  document.querySelector("#todoVal").value = " ";
-}); //Display Todos
+
+  if (todoName) {
+    var newToDoItem = new toDoItem(todoName, now);
+    console.log(newToDoItem);
+    listUI.addItemsToList(newToDoItem);
+    document.querySelector("#todoVal").value = " ";
+  }
+}); // Delete a Todo
+
+document.querySelector("#toDoList").addEventListener("click", function (e) {
+  listUI.deleteItem(e.target);
+});
