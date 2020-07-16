@@ -1,0 +1,96 @@
+@mixin box-s($x, $y, $offset, $color, $inset: false) {
+    $ie-color: ie-hex-str($color);
+
+  @if $inset {
+	    -webkit-box-shadow: inset $x $y $offset $color;
+			    box-shadow: inset $x $y $offset $color;			
+	} @else {
+	    -webkit-box-shadow: $x $y $offset $color;
+			    box-shadow: $x $y $offset $color;	
+		filter: progid:DXImageTransform.Microsoft.dropshadow(OffX=#{$x}, OffY=#{$y}, Color='#{$ie-color}');				
+	}
+}
+ 
+@mixin css3-prefix($property, $value) {
+	-webkit-#{$property}: #{$value};
+	 -khtml-#{$property}: #{$value};
+	   -moz-#{$property}: #{$value};
+		-ms-#{$property}: #{$value};
+		 -o-#{$property}: #{$value};
+			#{$property}: #{$value};
+  } 
+  
+ 
+@mixin box-shadow($x: 2px, $y: 2px, $blur: 5px, $color: rgba(0,0,0,.4), $inset: "") {
+	@if $inset != "" {
+	  @include css3-prefix('box-shadow', $inset $x $y $blur $color);
+  }
+  @else if $x == "none" {
+	  @include css3-prefix('box-shadow', "none");
+  }
+  @else {
+	  @include css3-prefix('box-shadow', $x $y $blur $color);
+  }
+}
+
+
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+@mixin border-radius($radius) {
+	border-radius: $radius;
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+}
+
+@mixin borderradius($topleft, $topright, $bottomright, $bottomleft) {
+	border-top-left-radius: $topleft;
+	border-top-right-radius: $topright;
+	border-bottom-right-radius: $bottomright;
+	border-bottom-left-radius: $bottomleft;
+	-webkit-border-top-left-radius: $topleft;
+	-webkit-border-top-right-radius: $topright;
+	-webkit-border-bottom-right-radius: $bottomright;
+	-webkit-border-bottom-left-radius: $bottomleft;
+	-moz-border-radius-topleft: $topleft;
+	-moz-border-radius-topright: $topright;
+	-moz-border-radius-bottomright: $bottomright;
+	-moz-border-radius-bottomleft: $bottomleft;
+}
+
+@mixin transform($transforms) {
+	   -moz-transform: $transforms;
+	     -o-transform: $transforms;
+	    -ms-transform: $transforms;
+	-webkit-transform: $transforms;
+          transform: $transforms;
+}
+// rotate
+@mixin rotate ($deg) {
+  @include transform(rotate(#{$deg}deg));
+}
+
+@mixin gradient($color1, $color2) {
+	background-color: $color1;
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$color1}, endColorstr=#{$color2});
+	background-image: -moz-linear-gradient(center top, $color1, $color2);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($color1), to($color2));
+}
+
+:root{
+  --red: tomato;
+  --white : white;
+  --black : black;
+  --purple : #43398d;
+}
+
+
+$gradient :   linear-gradient(135deg, rgba(77,61,153,1) 0%, rgba(77,61,153,1) 24%, rgba(84,64,163,1) 24%, rgba(84,64,163,1) 47%, rgba(92,69,174,1) 47%, rgba(92,69,174,1) 68%, rgba(99,73,185,1) 68%, rgba(100,74,187,1) 85%, rgba(115,88,204,1) 85%, rgba(115,88,204,1) 100%);
+
+
+$gradient2 :   linear-gradient(135deg,#933d99 0,#8f3d99 24%,#9840a3 24%,#a34085 47%,#ae45a1 47%,#ae4593 68%,#b249b9 68%,#bb4ab3 85%,#cc58ae 85%,#cc58c9 100%);
