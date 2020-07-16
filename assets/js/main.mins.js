@@ -47,13 +47,51 @@ var toDoItem = function toDoItem(todoVal, date) {
 
   this.todoVal = todoVal;
   this.date = date;
-}; // Add Todo
+}; //UI list
 
+
+var listUI = /*#__PURE__*/function () {
+  function listUI() {
+    _classCallCheck(this, listUI);
+  }
+
+  _createClass(listUI, null, [{
+    key: "displayTodos",
+    value: function displayTodos() {
+      var storedTodos = [{
+        todoVal: '1st Todo',
+        date: '1'
+      }, {
+        todoVal: '2nd Todo',
+        date: '2'
+      }];
+      var list = storedTodos;
+      list.forEach(function (item) {
+        return listUI.addItemsToList(item);
+      });
+    }
+  }, {
+    key: "addItemsToList",
+    value: function addItemsToList(item) {
+      var listContainer = document.querySelector("#toDoList");
+      var listRow = document.createElement('ul');
+      console.log(item);
+      listRow.innerHTML = "\n      <li> ".concat(item.todoVal, "</li>\n    ");
+      listContainer.appendChild(listRow);
+    }
+  }]);
+
+  return listUI;
+}(); // display todos
+
+
+document.addEventListener('DOMContentLoaded', listUI.displayTodos); // Add Todo
 
 document.getElementById("newToDoForm").addEventListener("submit", function (e) {
   e.preventDefault();
   var todoName = document.querySelector("#todoVal").value;
   var newToDoItem = new toDoItem(todoName, now);
   console.log(newToDoItem);
+  listUI.addItemsToList(newToDoItem);
   document.querySelector("#todoVal").value = " ";
 }); //Display Todos
